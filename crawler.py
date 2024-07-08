@@ -36,6 +36,17 @@ def create_db():
     conn.close()
 
 
+def drop_db():
+    # Teardown to drop the table
+    conn = sqlite3.connect("crawler_data.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DROP TABLE IF EXISTS entries")
+
+    conn.commit()
+    conn.close()
+
+
 def extract_entry_data(data, title):
     """Extracts the data necessary of each entry"""
     entry = {}
@@ -124,6 +135,8 @@ def get_entries():
         print(
             f"{entry[0]} Rank. Title: {entry[1]} ({entry[2]} points, {entry[3]} comments)"
         )
+
+    drop_db()
 
 
 get_entries()
